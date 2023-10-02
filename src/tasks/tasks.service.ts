@@ -3,7 +3,6 @@ import { TaskeStatus, Task } from './tasks.model';
 import { v4 as uuidv4 } from 'uuid';
 import { createTaskDto } from './dto/creat-task.dto';
 import { GetTaskFilterDto } from './dto/get-task-filter.dto';
-import { NotFoundError } from 'rxjs';
 @Injectable()
 export class TasksService {
     private tasks: Task[] = [];
@@ -38,7 +37,8 @@ export class TasksService {
     // ----------------------------------------------
 
     deleteTask(id: string): void {
-        this.tasks = this.tasks.filter(task => task.id !== id)
+        const found = this.getTaskById(id)
+        this.tasks = this.tasks.filter(task => task.id !== found.id)
     }
 
     // ----------------------------------------------
